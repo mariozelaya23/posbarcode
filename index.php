@@ -1,3 +1,52 @@
+<?php
+
+  include_once"ui/connectdb.php";
+
+  session_start();
+
+  //if the user click the login button
+  //using post to send the login request
+  if(isset($_POST['btn_login'])){
+
+    //storing txt filds into variables
+    $useremail = $_POST['txt_email'];
+    $userpass = $_POST['txt_pass'];
+
+    //testing passing of email and password
+    //echo $useremail." ".$userpass;
+
+    //geting user login data from the database
+    $select = $pdo->prepare("SELECT * FROM tbl_user WHERE useremail='$useremail' AND userpassword='$userpass'");
+    //execute the query
+    $select->execute();
+
+    //fetching ALL the data in the $row variable
+    $row = $select->fetch(PDO::FETCH_ASSOC);
+
+    //$row is an array containing the user data so if the user is incorrect it will throw an error to avoid the error we put the form validation inside this if statement using is_array()
+    if(is_array($row)){
+
+      //comparing if the user and password are equal to values in the database
+      if($row['useremail'] == $useremail && $row['userpassword'] == $userpass){
+
+      echo $success = "You are logged in";
+
+      //redirecting the user to the dashboard
+      header("refresh: 1; ui/dashboard.php");
+      
+      }
+
+    }else{
+
+      echo $error = "Incorrect email or password";
+    }
+
+  }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +73,9 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" class="form-control" placeholder="Email" name="txt_email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +83,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="txt_pass">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -44,18 +93,18 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
+            <a href="forgot-password.html">I forgot my password</a>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block" name="btn_login">Login</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
 
