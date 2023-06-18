@@ -45,6 +45,14 @@
 
           //redirecting the user to the User dashboard
           header("refresh: 1; ui/user.php");
+
+          //defining session variables
+          $_SESSION['userid'] = $row['userid'];
+          $_SESSION['username'] = $row['username'];
+          $_SESSION['useremail'] = $row['useremail'];
+          $_SESSION['role'] = $row['role'];
+
+          
         }
 
       }
