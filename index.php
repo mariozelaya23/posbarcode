@@ -27,13 +27,26 @@
     if(is_array($row)){
 
       //comparing if the user and password are equal to values in the database
-      if($row['useremail'] == $useremail && $row['userpassword'] == $userpass){
+      //Login to Admin Dashboard
+      if($row['useremail'] == $useremail && $row['userpassword'] == $userpass && $row['role'] == 'Admin'){
 
-      echo $success = "You are logged in";
+      echo $success = "You are logged as Admin";
 
-      //redirecting the user to the dashboard
+      //redirecting the user to the Admin dashboard
       header("refresh: 1; ui/dashboard.php");
       
+      }else{
+
+        //comparing if the user and password are equal to values in the database
+        //Login to User Dashboard
+        if($row['useremail'] == $useremail && $row['userpassword'] == $userpass && $row['role'] == 'User'){
+
+          echo $success = "You are logged in as User";
+
+          //redirecting the user to the User dashboard
+          header("refresh: 1; ui/user.php");
+        }
+
       }
 
     }else{
