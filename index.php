@@ -34,6 +34,12 @@
 
       //redirecting the user to the Admin dashboard
       header("refresh: 1; ui/dashboard.php");
+
+      //defining session variables
+      $_SESSION['userid'] = $row['userid'];
+      $_SESSION['username'] = $row['username'];
+      $_SESSION['useremail'] = $row['useremail'];
+      $_SESSION['role'] = $row['role'];
       
       }else{
 
@@ -52,7 +58,6 @@
           $_SESSION['useremail'] = $row['useremail'];
           $_SESSION['role'] = $row['role'];
 
-          
         }
 
       }
